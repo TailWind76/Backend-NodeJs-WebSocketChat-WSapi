@@ -1,0 +1,30 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Chat</title>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <input id="input" type="text" />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+      const ws = new WebSocket('ws://localhost:3000');
+
+      function sendMessage() {
+        const input = document.getElementById('input');
+        const message = input.value;
+        ws.send(message);
+        input.value = '';
+      }
+
+      ws.onmessage = (event) => {
+        const messages = document.getElementById('messages');
+        const li = document.createElement('li');
+        li.textContent = event.data;
+        messages.appendChild(li);
+      };
+    </script>
+  </body>
+</html>
